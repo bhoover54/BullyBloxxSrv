@@ -1,8 +1,19 @@
 
-# todo
+# TODO
 
-1 create model for 
+### create model for 
 	. users
 	. schools
 	. sponsors
 	. wallet
+	. role
+	. contents
+### create controller for
+	. users
+	. schools
+	. sponsors
+	. wallet
+	. role
+	. contents
+
+	

@@ -1,0 +1,21 @@
+const SUCCESS = 200
+const CREATED = 201
+const NO_CONTENT = 204
+const NOT_FOUND = 404
+const BAD_REQUEST = 400
+const FORBIDDEN = 400
+const CONFLICT = 409
+const SERVER_ERROR = 500
+
+const HTTP = {
+  SUCCESS,
+  CREATED,
+  NOT_FOUND,
+  NO_CONTENT,
+  BAD_REQUEST,
+  FORBIDDEN,
+  SERVER_ERROR,
+  CONFLICT
+}
+
+export default HTTP
