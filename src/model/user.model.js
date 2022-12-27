@@ -1,21 +1,18 @@
 import { Model, DataTypes } from "sequelize"
-import sequelize from "../connection/db.js"
+import sequelize from "../config/db.js"
 
-class Profile extends Model {}
-Profile.init(
+class User extends Model {}
+User.init(
   {
-    id: {
-      type: DataTypes.CHAR,
-      allowNull: false,
-      primaryKey: true,
-      defaultValue: DataTypes.UUIDV4
-    },
-    userid: { type: DataTypes.CHAR, allowNull: false, primaryKey: true },
-    profile_pics: DataTypes.STRING,
-    identificationMeans: DataTypes.STRING,
-    identificationNumber: DataTypes.STRING,
-    identificationId: DataTypes.STRING
+    id: { type: DataTypes.INTEGER, allowNull: false, primaryKey: true },
+    fullName: { type: DataTypes.STRING, allowNull: false },
+    email: { type: DataTypes.STRING, allowNull: false },
+    phone: DataTypes.STRING,
+    country: DataTypes.STRING,
+    state: DataTypes.STRING,
+    password: { type: DataTypes.STRING, allowNull: false },
+    deletedAt: { type: DataTypes.STRING }
   },
-  { sequelize, modelName: "Profile" }
+  { sequelize, tableName: "users", paranoid: true }
 )
-export default Profile
+export default User
