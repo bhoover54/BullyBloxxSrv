@@ -1,8 +1,8 @@
 import { Model, DataTypes } from "sequelize"
 import sequelize from "../config/db.js"
 
-class Content extends Model {}
-Content.init(
+class Report extends Model {}
+Report.init(
   {
     id: { type: DataTypes.INTEGER, allowNull: false, primaryKey: true },
     title: { type: DataTypes.STRING, allowNull: false },
@@ -10,6 +10,6 @@ Content.init(
     videoLink: DataTypes.TEXT,
     deletedAt: DataTypes.DATE
   },
-  { sequelize, tableName: "contents", paranoid: true }
+  { sequelize, tableName: "reports", paranoid: true }
 )
-export default Content
+export default Report

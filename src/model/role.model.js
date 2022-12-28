@@ -6,7 +6,7 @@ Role.init(
   {
     id: { type: DataTypes.INTEGER, allowNull: false, primaryKey: true },
     name: { type: DataTypes.STRING, allowNull: false },
-    deletedAt: { type: DataTypes.STRING }
+    deletedAt: DataTypes.DATE
   },
   { sequelize, tableName: "roles", paranoid: true }
 )

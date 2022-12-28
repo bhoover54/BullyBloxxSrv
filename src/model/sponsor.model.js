@@ -1,14 +1,17 @@
 import { Model, DataTypes } from "sequelize"
 import sequelize from "../config/db.js"
 
-class School extends Model {}
-School.init(
+class Sponsorship extends Model {}
+Sponsorship.init(
   {
     id: { type: DataTypes.INTEGER, allowNull: false, primaryKey: true },
-    name: { type: DataTypes.STRING, allowNull: false },
-    zipCode: { type: DataTypes.STRING, allowNull: false },
-    deletedAt: { type: DataTypes.STRING }
+    school_id: { type: DataTypes.STRING, allowNull: false },
+    user_id: { type: DataTypes.STRING, allowNull: false },
+    approved: { type: DataTypes.STRING, defaultValue: "pending" },
+    qauntity: { type: DataTypes.STRING, defaultValue: "1" },
+    type: DataTypes.STRING,
+    deletedAt: DataTypes.DATE
   },
   { sequelize, tableName: "schools", paranoid: true }
 )
-export default School
+export default Sponsorship

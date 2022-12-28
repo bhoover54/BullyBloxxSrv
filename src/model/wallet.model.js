@@ -5,7 +5,7 @@ class Wallet extends Model {}
 Wallet.init(
   {
     id: { type: DataTypes.INTEGER, allowNull: false, primaryKey: true },
-    schoolId: { type: DataTypes.STRING, allowNull: false },
+    school_id: { type: DataTypes.STRING, allowNull: false },
     balance: { type: DataTypes.STRING, defaultValue: "535" },
     deletedAt: { type: DataTypes.STRING }
   },

@@ -11,7 +11,7 @@ User.init(
     country: DataTypes.STRING,
     state: DataTypes.STRING,
     password: { type: DataTypes.STRING, allowNull: false },
-    deletedAt: { type: DataTypes.STRING }
+    deletedAt: DataTypes.DATE
   },
   { sequelize, tableName: "users", paranoid: true }
 )
