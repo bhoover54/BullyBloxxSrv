@@ -3,7 +3,9 @@ import HTTP from "../config/status-code.js"
 import User from "../model/user.model.js"
 import { hash, compare } from "bcrypt"
 import token from "../config/token.js"
+import Role from "../model/role.model.js"
 
+User.belongsTo(Role, { as: "role", foreignKey: "role_id" })
 const signUp = async (req, res) => {
   try {
     if (!verifyEmail(req.body.email))
@@ -24,24 +26,34 @@ const signUp = async (req, res) => {
 
 const login = async (req, res) => {
   try {
-    const user = await User.findOne({ where: { email: req.body.email } })
+    const user = await User.findOne({
+      where: { email: req.body.email },
+      attributes: { exclude: ["role_id"] },
+      include: {
+        model: Role,
+        as: "role",
+        attributes: ["name"]
+      }
+    })
     if (!user)
       return res.status(HTTP.FORBIDDEN).json({
         message: "user not found"
       })
-    const pass = await compare(req.body.password, user.password)
+    const pass = await compare(req.body.password.toString(), user.password)
 
     if (!pass)
       return res.status(HTTP.FORBIDDEN).json({
         message: "invalid email or password"
       })
-    const { password, createAt, updatedAt, ...others } = user
 
-    const userToken = token(others)
+    const userToken = token.accessToken({
+      id: user.id,
+      name: user.fullName,
+      role: user.role.name
+    })
     return res.status(HTTP.CREATED).json({
       message: "success",
-      token: userToken,
-      user: others
+      token: userToken
     })
   } catch (error) {
     console.log(error)

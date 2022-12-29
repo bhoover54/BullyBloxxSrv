@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken"
+import jwt_decode from "jwt-decode"
 
 const accessToken = (user) => jwt.sign(user, "token")
 

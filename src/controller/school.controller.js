@@ -1,17 +1,14 @@
 import HTTP from "../config/status-code.js"
 import token from "../config/token.js"
 import Sponsorship from "../model/sponsor.model.js"
-import School from "../model/sponsor.model.js"
+import School from "../model/school.model.js"
 import Wallet from "../model/wallet.model.js"
 
 const addSchool = async (req, res) => {
   try {
+    req.body.sponsor_id = token.decodeToken(req).id
     const school = await School.create(req.body)
-    if (school.id)
-      return res.status(HTTP.SUCCESS).json({
-        message: "success",
-        id: school.id
-      })
+
     return res.status(HTTP.BAD_REQUEST).json({
       message: "fail"
     })
@@ -34,7 +31,7 @@ const getSchools = async (req, res) => {
 
 const getSchool = async (req, res) => {
   try {
-    const school = await School.findAll({ where: { id: req.params.id } })
+    const school = await School.findOne({ where: { id: req.params.id } })
     return res.status(HTTP.SUCCESS).json({
       message: "success",
       data: school
@@ -45,29 +42,38 @@ const getSchool = async (req, res) => {
 }
 
 // sponsorships
-const sponsorSchool = async (req, res) => {
+const donateSchool = async (req, res) => {
   try {
-    req.body.user_id = token.decodeToken(req).user_id
-    const schoolWallet = Wallet.findOne({ where: { schoolId: req.school_id } })
-    if (schoolWallet) {
-      const balance = schoolWallet.balance
-      if (balance >= 3600)
-        return res.status(HTTP.SUCCESS).json({
-          message: "success",
-          data: { message: "maximum yearly sponsorhip reached" }
-        })
-    }
-    await Sponsorship.create(req)
+    // req.body.user_id = token.decodeToken(req).user_id
+    console.log(req.params.school_id)
+    const schoolWallet = await Wallet.findOne({ where: { school_id: req.params.school_id } })
+    if (!schoolWallet)
+      return res.status(HTTP.SUCCESS).json({
+        message: "success",
+        data: { message: "school not sponsored" }
+      })
+
+    let balance = schoolWallet.balance
+    console.log(balance)
+    // return
+    if (balance >= 3600)
+      return res.status(HTTP.SUCCESS).json({
+        message: "success",
+        data: { message: "maximum yearly sponsorhip reached" }
+      })
+    balance = parseInt(schoolWallet.balance) + parseInt(req.body.amount)
+    req.body.school_id = req.params.school_id
+    await Sponsorship.create(req.body)
+    await Wallet.update({ balance: balance }, { where: { school_id: req.params.school_id } })
+
     return res.status(HTTP.SUCCESS).json({
-      message: "success",
-      data: { message: "" }
+      message: "success"
     })
   } catch (error) {
     console.log(error)
   }
 }
 
-// const supportSchool = (req, res) => {}
 const deleteSchool = async (req, res) => {
   try {
     await School.destroy({ where: { id: req.params.id } })
@@ -92,5 +98,5 @@ const updateSchool = async (req, res) => {
   }
 }
 
-const SCHOOL = { addSchool, getSchool, getSchools, deleteSchool, updateSchool }
+const SCHOOL = { addSchool, getSchool, getSchools, deleteSchool, updateSchool, donateSchool }
 export default SCHOOL

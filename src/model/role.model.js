@@ -4,7 +4,7 @@ import sequelize from "../config/db.js"
 class Role extends Model {}
 Role.init(
   {
-    id: { type: DataTypes.INTEGER, allowNull: false, primaryKey: true },
+    id: { type: DataTypes.INTEGER, allowNull: false, primaryKey: true, autoIncrement: true },
     name: { type: DataTypes.STRING, allowNull: false },
     deletedAt: DataTypes.DATE
   },

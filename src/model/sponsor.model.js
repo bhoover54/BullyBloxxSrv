@@ -4,14 +4,14 @@ import sequelize from "../config/db.js"
 class Sponsorship extends Model {}
 Sponsorship.init(
   {
-    id: { type: DataTypes.INTEGER, allowNull: false, primaryKey: true },
+    id: { type: DataTypes.INTEGER, allowNull: false, primaryKey: true, autoIncrement: true },
+    name: { type: DataTypes.STRING, allowNull: false },
+    email: { type: DataTypes.STRING, allowNull: false },
+    // user_id: { type: DataTypes.STRING, allowNull: false },
     school_id: { type: DataTypes.STRING, allowNull: false },
-    user_id: { type: DataTypes.STRING, allowNull: false },
-    approved: { type: DataTypes.STRING, defaultValue: "pending" },
-    qauntity: { type: DataTypes.STRING, defaultValue: "1" },
-    type: DataTypes.STRING,
+    amount: { type: DataTypes.STRING, allowNull: false },
     deletedAt: DataTypes.DATE
   },
-  { sequelize, tableName: "schools", paranoid: true }
+  { sequelize, tableName: "sponsors", paranoid: true }
 )
 export default Sponsorship
