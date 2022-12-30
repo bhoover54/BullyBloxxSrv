@@ -1,5 +1,6 @@
 import HTTP from "../config/status-code.js"
 import School from "../model/school.model.js"
+import Wallet from "../model/wallet.model.js"
 
 const approveSponsor = async (req, res) => {
   try {

@@ -6,8 +6,9 @@ import sequelize from "./config/db.js"
 
 const app = express()
 dotenv.config()
-app.use(json())
 app.use(cors({ origin: "*" }))
+app.use(json({ limit: "100mb" }))
+
 const PORT = process.env.PORT || 5000
 sequelize.sync()
 routes(app)

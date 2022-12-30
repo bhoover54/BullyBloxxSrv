@@ -9,8 +9,8 @@ const addSchool = async (req, res) => {
     req.body.sponsor_id = token.decodeToken(req).id
     const school = await School.create(req.body)
 
-    return res.status(HTTP.BAD_REQUEST).json({
-      message: "fail"
+    return res.status(HTTP.SUCCESS).json({
+      message: "success"
     })
   } catch (error) {
     console.log(error)
@@ -44,9 +44,7 @@ const getSchool = async (req, res) => {
 // sponsorships
 const donateSchool = async (req, res) => {
   try {
-    // req.body.user_id = token.decodeToken(req).user_id
-    console.log(req.params.school_id)
-    const schoolWallet = await Wallet.findOne({ where: { school_id: req.params.school_id } })
+    const schoolWallet = await Wallet.findOne({ where: { school_id: req.body.school_id } })
     if (!schoolWallet)
       return res.status(HTTP.SUCCESS).json({
         message: "success",
@@ -74,6 +72,16 @@ const donateSchool = async (req, res) => {
   }
 }
 
+const getDonators = async (req, res) => {
+  try {
+    const donators = await Sponsorship.findAll()
+    return res.status(HTTP.SUCCESS).json({
+      message: "success",
+      data: donators
+    })
+  } catch (error) {}
+}
+
 const deleteSchool = async (req, res) => {
   try {
     await School.destroy({ where: { id: req.params.id } })
@@ -98,5 +106,13 @@ const updateSchool = async (req, res) => {
   }
 }
 
-const SCHOOL = { addSchool, getSchool, getSchools, deleteSchool, updateSchool, donateSchool }
+const SCHOOL = {
+  addSchool,
+  getSchool,
+  getSchools,
+  deleteSchool,
+  updateSchool,
+  donateSchool,
+  getDonators
+}
 export default SCHOOL
