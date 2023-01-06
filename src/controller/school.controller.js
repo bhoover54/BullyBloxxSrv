@@ -3,6 +3,8 @@ import token from "../config/token.js"
 import Sponsorship from "../model/sponsor.model.js"
 import School from "../model/school.model.js"
 import Wallet from "../model/wallet.model.js"
+import { Op, Sequelize } from "sequelize"
+import { emailConfig } from "../config/helper.js"
 
 const addSchool = async (req, res) => {
   try {
@@ -10,7 +12,8 @@ const addSchool = async (req, res) => {
     const school = await School.create(req.body)
 
     return res.status(HTTP.SUCCESS).json({
-      message: "success"
+      message: "success",
+      id: school.id
     })
   } catch (error) {
     console.log(error)
@@ -60,9 +63,9 @@ const donateSchool = async (req, res) => {
         data: { message: "maximum yearly sponsorhip reached" }
       })
     balance = parseInt(schoolWallet.balance) + parseInt(req.body.amount)
-    req.body.school_id = req.params.school_id
+    console.log(req.body)
     await Sponsorship.create(req.body)
-    await Wallet.update({ balance: balance }, { where: { school_id: req.params.school_id } })
+    await Wallet.update({ balance: balance }, { where: { school_id: req.body.school_id } })
 
     return res.status(HTTP.SUCCESS).json({
       message: "success"
@@ -106,6 +109,44 @@ const updateSchool = async (req, res) => {
   }
 }
 
+const filterSchool = async (req, res) => {
+  try {
+    const filter = await School.findOne({
+      where: {
+        school_name: Sequelize.where(
+          Sequelize.fn("LOWER", Sequelize.col("school_name")),
+          "Like",
+          `%` + req.body.schoolName + `%`
+        ),
+        zip_code: req.body.zip_code
+        // approved: "approved"
+      }
+    })
+
+    return res.status(HTTP.SUCCESS).json({
+      message: "success",
+      data: filter
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const sendEmail = async (req, res) => {
+  try {
+    const send = emailConfig({
+      to: "volumide42@gmail.com",
+      subject: "testing",
+      text: "hello there"
+    })
+    return res.status(HTTP.SUCCESS).json({
+      message: send
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 const SCHOOL = {
   addSchool,
   getSchool,
@@ -113,6 +154,8 @@ const SCHOOL = {
   deleteSchool,
   updateSchool,
   donateSchool,
-  getDonators
+  getDonators,
+  filterSchool,
+  sendEmail
 }
 export default SCHOOL

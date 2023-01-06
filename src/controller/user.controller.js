@@ -4,8 +4,10 @@ import User from "../model/user.model.js"
 import { hash, compare } from "bcrypt"
 import token from "../config/token.js"
 import Role from "../model/role.model.js"
+import Report from "../model/report.model.js"
 
-User.belongsTo(Role, { as: "role", foreignKey: "role_id" })
+// User.belongsTo(Role, { as: "role", foreignKey: "role_id" })
+// User.hasMany(Report, { as: "reports", sourceKey: "id", foreignKey: "user_id" })
 const signUp = async (req, res) => {
   try {
     if (!verifyEmail(req.body.email))
@@ -54,13 +56,34 @@ const login = async (req, res) => {
     })
     return res.status(HTTP.CREATED).json({
       message: "success",
-      token: userToken
+      token: userToken,
+      role: user.role.name
     })
   } catch (error) {
     console.log(error)
   }
 }
 
-// const updateProfile = () => {}
-const USER = { login, signUp }
+const getUsers = async (req, res) => {
+  try {
+    console.log(req.body)
+    const user = await User.findAll({
+      attributes: { exclude: ["role_id"] },
+      include: {
+        model: Report,
+        as: "reports",
+        attributes: { exclude: ["deletedAt", "updatedAt", "user_id"] }
+      }
+    })
+
+    return res.status(HTTP.CREATED).json({
+      message: "success",
+      data: user
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const USER = { login, signUp, getUsers }
 export default USER

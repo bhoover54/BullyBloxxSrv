@@ -1,6 +1,6 @@
 import approveSponsor from "../controller/admin.controller.js"
 import CONTENT from "../controller/content.controller.js"
-import createReport, { uploadFile } from "../controller/report.controller.js"
+import createReport, { getReport, payment, uploadFile } from "../controller/report.controller.js"
 import newRole from "../controller/role.controller.js"
 import SCHOOL from "../controller/school.controller.js"
 import USER from "../controller/user.controller.js"
@@ -19,6 +19,8 @@ const routes = (app) => {
   app.get("/school/:id", SCHOOL.getSchool)
   app.delete("/school/:id", SCHOOL.deleteSchool)
   app.put("/school/:id", SCHOOL.updateSchool)
+  app.post("/school/filter", SCHOOL.filterSchool)
+
   app.post("/upload", upload.single("upload"), uploadFile)
   app.post("/content", CONTENT.createContent)
   app.put("/content/:id", CONTENT.updateContent)
@@ -26,7 +28,11 @@ const routes = (app) => {
   app.get("/content/:id", CONTENT.getContent)
   app.delete("/content/:id", CONTENT.deleteContent)
 
+  app.get("/users", USER.getUsers)
+  app.get("/reports", getReport)
   app.post("/role", newRole)
+  app.post("/payment", payment)
+  app.post("/send/mail", SCHOOL.sendEmail)
   app.post("/report", authenticate, upload.single("upload"), createReport)
   app.put("/approve/school/:school_id", approveSponsor)
 }
