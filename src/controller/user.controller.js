@@ -6,8 +6,8 @@ import token from "../config/token.js"
 import Role from "../model/role.model.js"
 import Report from "../model/report.model.js"
 
-// User.belongsTo(Role, { as: "role", foreignKey: "role_id" })
-// User.hasMany(Report, { as: "reports", sourceKey: "id", foreignKey: "user_id" })
+User.belongsTo(Role, { as: "role", foreignKey: "role_id" })
+User.hasMany(Report, { as: "reports", sourceKey: "id", foreignKey: "user_id" })
 const signUp = async (req, res) => {
   try {
     if (!verifyEmail(req.body.email))

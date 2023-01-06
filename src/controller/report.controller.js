@@ -4,7 +4,7 @@ import Report from "../model/report.model.js"
 import Stripe from "stripe"
 import User from "../model/user.model.js"
 
-// Report.belongsTo(User, { as: "user", foreignKey: "user_id" })
+Report.belongsTo(User, { as: "user", foreignKey: "user_id" })
 
 const createReport = async (req, res) => {
   try {
