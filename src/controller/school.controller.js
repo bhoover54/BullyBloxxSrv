@@ -6,6 +6,7 @@ import Wallet from "../model/wallet.model.js"
 import { Op, Sequelize } from "sequelize"
 import { emailConfig } from "../config/helper.js"
 
+School.hasOne(Wallet, { as: "wallet", foreignKey: "school_id", sourceKey: "id" })
 const addSchool = async (req, res) => {
   try {
     req.body.sponsor_id = token.decodeToken(req).id
@@ -22,7 +23,13 @@ const addSchool = async (req, res) => {
 
 const getSchools = async (req, res) => {
   try {
-    const schools = await School.findAll()
+    const schools = await School.findAll({
+      include: {
+        model: Wallet,
+        as: "wallet",
+        attributes: ["balance"]
+      }
+    })
     return res.status(HTTP.SUCCESS).json({
       message: "success",
       data: schools
@@ -120,6 +127,11 @@ const filterSchool = async (req, res) => {
         ),
         zip_code: req.body.zip_code
         // approved: "approved"
+      },
+      include: {
+        model: Wallet,
+        as: "wallet",
+        attributes: ["balance"]
       }
     })
 

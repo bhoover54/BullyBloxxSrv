@@ -7,7 +7,7 @@ import path from "path"
 
 const app = express()
 dotenv.config()
-app.use(express.static("public/upload"))
+app.use(express.static("public/uploads"))
 app.use(cors({ origin: "*" }))
 app.use(json({ limit: "100mb" }))
 
