@@ -16,6 +16,7 @@ const signUp = async (req, res) => {
       })
     const password = await hash(req.body.password.toString(), 10)
     req.body.password = password
+    req.body.fullName = req.body.first_name + " " + req.body.last_name
     const user = await User.create(req.body)
     return res.status(HTTP.CREATED).json({
       message: "success",

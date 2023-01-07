@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "afrilens_victor",
+    "password": "Bullyvax2022",
+    "database": "afrilens_bullybloxx",
+    "host": "afrilens.com.ng",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": null,
+    "database": "database_production",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}
