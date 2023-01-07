@@ -123,10 +123,17 @@ const filterSchool = async (req, res) => {
         school_name: Sequelize.where(
           Sequelize.fn("LOWER", Sequelize.col("school_name")),
           "Like",
-          `%` + req.body.schoolName + `%`
+          `%` + req.body.schoolName.trim() + `%`
         ),
-        zip_code: req.body.zip_code
-        // approved: "approved"
+        zip_code: req.body.zip_code.trim(),
+        [Op.or]: {
+          school_name: Sequelize.where(
+            Sequelize.fn("LOWER", Sequelize.col("school_name")),
+            "Like",
+            `%` + req.body.schoolName + `%`
+          ),
+          zip_code: req.body.zip_code
+        }
       },
       include: {
         model: Wallet,
