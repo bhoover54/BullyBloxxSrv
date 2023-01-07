@@ -12,6 +12,18 @@ const newRole = async (req, res) => {
   }
 }
 
+export const getRoles = async (req, res) => {
+  try {
+    const role = await Role.findAll()
+    return res.status(HTTP.SUCCESS).json({
+      message: "success",
+      data: role
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export default newRole
 
 // Role

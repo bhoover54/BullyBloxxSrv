@@ -1,7 +1,7 @@
 import approveSponsor from "../controller/admin.controller.js"
 import CONTENT from "../controller/content.controller.js"
 import createReport, { getReport, payment, uploadFile } from "../controller/report.controller.js"
-import newRole from "../controller/role.controller.js"
+import newRole, { getRoles } from "../controller/role.controller.js"
 import SCHOOL from "../controller/school.controller.js"
 import USER from "../controller/user.controller.js"
 import { upload } from "./helper.js"
@@ -31,6 +31,7 @@ const routes = (app) => {
   app.get("/users", USER.getUsers)
   app.get("/reports", getReport)
   app.post("/role", newRole)
+  app.get("/role", getRoles)
   app.post("/payment", payment)
   app.post("/send/mail", SCHOOL.sendEmail)
   app.post("/report", authenticate, upload.single("upload"), createReport)
