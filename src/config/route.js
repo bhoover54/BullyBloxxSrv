@@ -19,7 +19,7 @@ const routes = (app) => {
   app.get("/school/:id", SCHOOL.getSchool)
   app.delete("/school/:id", SCHOOL.deleteSchool)
   app.put("/school/:id", SCHOOL.updateSchool)
-  app.post("/school/filter", SCHOOL.filterSchool)
+  app.post("/school/filter", SCHOOL.searchSchool)
 
   app.post("/upload", upload.single("upload"), uploadFile)
   app.post("/content", CONTENT.createContent)

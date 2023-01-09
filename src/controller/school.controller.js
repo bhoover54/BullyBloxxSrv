@@ -7,9 +7,46 @@ import { Op, Sequelize } from "sequelize"
 import { emailConfig } from "../config/helper.js"
 
 School.hasOne(Wallet, { as: "wallet", foreignKey: "school_id", sourceKey: "id" })
+const filterSchool = async (req) => {
+  try {
+    const filter = await School.findOne({
+      where: {
+        school_name: Sequelize.where(
+          Sequelize.fn("LOWER", Sequelize.col("school_name")),
+          "Like",
+          `%` + req.body.school_name.trim() + `%`
+        ),
+        zip_code: req.body.zip_code.trim(),
+        [Op.or]: {
+          school_name: Sequelize.where(
+            Sequelize.fn("LOWER", Sequelize.col("school_name")),
+            "Like",
+            `%` + req.body.school_name + `%`
+          ),
+          zip_code: req.body.zip_code
+        }
+      },
+      include: {
+        model: Wallet,
+        as: "wallet",
+        attributes: ["balance"]
+      }
+    })
+
+    return filter
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 const addSchool = async (req, res) => {
   try {
     req.body.sponsor_id = token.decodeToken(req).id
+    const findSchool = await filterSchool(req)
+    if (findSchool !== null)
+      return res.status(HTTP.CONFLICT).json({
+        message: "school already sponsored"
+      })
     const school = await School.create(req.body)
 
     return res.status(HTTP.SUCCESS).json({
@@ -19,6 +56,16 @@ const addSchool = async (req, res) => {
   } catch (error) {
     console.log(error)
   }
+}
+
+const searchSchool = async (req, res) => {
+  try {
+    const filter = await filterSchool(req)
+    return res.status(HTTP.SUCCESS).json({
+      message: "success",
+      data: filter
+    })
+  } catch (error) {}
 }
 
 const getSchools = async (req, res) => {
@@ -116,41 +163,6 @@ const updateSchool = async (req, res) => {
   }
 }
 
-const filterSchool = async (req, res) => {
-  try {
-    const filter = await School.findOne({
-      where: {
-        school_name: Sequelize.where(
-          Sequelize.fn("LOWER", Sequelize.col("school_name")),
-          "Like",
-          `%` + req.body.schoolName.trim() + `%`
-        ),
-        zip_code: req.body.zip_code.trim(),
-        [Op.or]: {
-          school_name: Sequelize.where(
-            Sequelize.fn("LOWER", Sequelize.col("school_name")),
-            "Like",
-            `%` + req.body.schoolName + `%`
-          ),
-          zip_code: req.body.zip_code
-        }
-      },
-      include: {
-        model: Wallet,
-        as: "wallet",
-        attributes: ["balance"]
-      }
-    })
-
-    return res.status(HTTP.SUCCESS).json({
-      message: "success",
-      data: filter
-    })
-  } catch (error) {
-    console.log(error)
-  }
-}
-
 const sendEmail = async (req, res) => {
   try {
     const send = emailConfig({
@@ -174,7 +186,7 @@ const SCHOOL = {
   updateSchool,
   donateSchool,
   getDonators,
-  filterSchool,
+  searchSchool,
   sendEmail
 }
 export default SCHOOL
