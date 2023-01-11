@@ -31,6 +31,25 @@ Report.init(
     serail_bully: DataTypes.STRING,
     other_incidents: DataTypes.STRING,
     video_link: DataTypes.STRING,
+
+    threat_name: DataTypes.STRING,
+    threat_gender: DataTypes.STRING,
+    threat_grade: DataTypes.STRING,
+    threat_teacher: DataTypes.STRING,
+    threat_date: DataTypes.STRING,
+    threat_student_aware: DataTypes.STRING,
+    threat_other_student: DataTypes.STRING,
+    threat_details: DataTypes.STRING,
+
+    w_name: DataTypes.STRING,
+    w_gender: DataTypes.STRING,
+    w_grade: DataTypes.STRING,
+    w_teacher: DataTypes.STRING,
+    w_type: DataTypes.STRING,
+    w_other_students: DataTypes.STRING,
+    w_sknow: DataTypes.STRING,
+    w_details: DataTypes.STRING,
+    bully_witnessed: DataTypes.STRING,
     deletedAt: DataTypes.DATE
   },
   { sequelize, tableName: "reports", paranoid: true }
