@@ -47,30 +47,4 @@ export const uploadFile = (req, res) => {
   return res.json(req.body)
 }
 
-export const payment = async (req, res) => {
-  const stripe = Stripe(process.env.SECRET_KEY)
-  console.log("working")
-  // const customer = stripe.customer.create({})
-  const send = await stripe.charges.create(
-    {
-      amount: 2000,
-      currency: "usd",
-      source: "tok_mastercard", // obtained with Stripe.js
-      description: "My First Test Charge (created for API docs at https://www.stripe.com/docs/api)"
-    },
-    {
-      idempotencyKey: "dAVrMjj4xweZDC0n"
-    }
-  )
-  const j = await send
-  return res.status(200).json({
-    j
-  })
-  // try {
-
-  // } catch (error) {
-  //   console.log(error)
-  // }
-}
-
 export default createReport

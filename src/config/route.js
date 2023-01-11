@@ -1,6 +1,7 @@
 import approveSponsor from "../controller/admin.controller.js"
 import CONTENT from "../controller/content.controller.js"
-import createReport, { getReport, payment, uploadFile } from "../controller/report.controller.js"
+import { payment } from "../controller/payment.controller.js"
+import createReport, { getReport, uploadFile } from "../controller/report.controller.js"
 import newRole, { getRoles } from "../controller/role.controller.js"
 import SCHOOL from "../controller/school.controller.js"
 import USER from "../controller/user.controller.js"

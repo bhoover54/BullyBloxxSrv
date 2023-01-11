@@ -5,6 +5,7 @@ import School from "../model/school.model.js"
 import Wallet from "../model/wallet.model.js"
 import { Op, Sequelize } from "sequelize"
 import { emailConfig } from "../config/helper.js"
+import Stripe from "stripe"
 
 School.hasOne(Wallet, { as: "wallet", foreignKey: "school_id", sourceKey: "id" })
 const filterSchool = async (req) => {
@@ -100,29 +101,48 @@ const getSchool = async (req, res) => {
 
 // sponsorships
 const donateSchool = async (req, res) => {
+  const stripe = Stripe(process.env.SECRET_KEY)
   try {
     const schoolWallet = await Wallet.findOne({ where: { school_id: req.body.school_id } })
     if (!schoolWallet)
-      return res.status(HTTP.SUCCESS).json({
+      return res.status(HTTP.NOT_FOUND).json({
         message: "success",
         data: { message: "school not sponsored" }
       })
 
     let balance = schoolWallet.balance
-    console.log(balance)
-    // return
+    const { name, school_id, amount, token } = req.body
     if (balance >= 3600)
-      return res.status(HTTP.SUCCESS).json({
+      return res.status(HTTP.FORBIDDEN).json({
         message: "success",
         data: { message: "maximum yearly sponsorhip reached" }
       })
+
     balance = parseInt(schoolWallet.balance) + parseInt(req.body.amount)
-    console.log(req.body)
-    await Sponsorship.create(req.body)
+    const send = await stripe.charges.create(
+      {
+        amount: amount * 100,
+        currency: "usd",
+        source: token.id,
+        receipt_email: token.email,
+        description: "school support"
+      },
+      {
+        idempotencyKey: `${new Date()}${token}`
+      }
+    )
+    const result = await send
+    if (result.status !== "succeeded")
+      return res.status(HTTP.SERVER_ERROR).json({
+        message: "fail"
+      })
+
+    await Sponsorship.create({ name, email: token.email, school_id, amount })
     await Wallet.update({ balance: balance }, { where: { school_id: req.body.school_id } })
 
     return res.status(HTTP.SUCCESS).json({
-      message: "success"
+      message: "success",
+      receipt: result.receipt_url
     })
   } catch (error) {
     console.log(error)

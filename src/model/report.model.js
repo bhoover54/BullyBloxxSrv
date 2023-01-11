@@ -36,3 +36,24 @@ Report.init(
   { sequelize, tableName: "reports", paranoid: true }
 )
 export default Report
+
+// principal email
+// threat_name
+// threat_gender
+// threat_grage
+// threat_teacher
+// threat_date
+// threat_student_aware
+// threat_other_student
+// threat_details
+
+// w_name
+// w_gender
+// w_grade
+// w_teacher
+// w_type
+// w_other_students
+// w_sknow
+// w_details
+
+// bully_witnessed
