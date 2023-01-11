@@ -13,7 +13,7 @@ School.init(
     business_mobile: { type: DataTypes.STRING, allowNull: false },
     business_website: { type: DataTypes.STRING, allowNull: false },
     business_type: { type: DataTypes.STRING, allowNull: false },
-
+    video_link: DataTypes.STRING,
     approved: { type: DataTypes.STRING, defaultValue: "pending" },
     deletedAt: DataTypes.DATE
   },

@@ -43,6 +43,7 @@ const filterSchool = async (req) => {
 const addSchool = async (req, res) => {
   try {
     req.body.sponsor_id = token.decodeToken(req).id
+    req.body.video_link = req.file.filename
     const findSchool = await filterSchool(req)
     if (findSchool !== null)
       return res.status(HTTP.CONFLICT).json({

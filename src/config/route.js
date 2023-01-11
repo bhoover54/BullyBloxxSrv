@@ -13,7 +13,7 @@ const routes = (app) => {
   app.post("/signup", USER.signUp)
   app.post("/signin", USER.login)
 
-  app.post("/sponsor/school", authenticate, SCHOOL.addSchool)
+  app.post("/sponsor/school", authenticate, upload.single("upload"), SCHOOL.addSchool)
   app.post("/donate/school", SCHOOL.donateSchool)
   app.get("/donators", SCHOOL.getDonators)
   app.get("/schools", SCHOOL.getSchools)
