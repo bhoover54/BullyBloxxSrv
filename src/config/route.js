@@ -1,7 +1,7 @@
 import approveSponsor from "../controller/admin.controller.js"
 import CONTENT from "../controller/content.controller.js"
 import { payment } from "../controller/payment.controller.js"
-import createReport, { getReport, uploadFile } from "../controller/report.controller.js"
+import createReport, { getReport, periscope, uploadFile } from "../controller/report.controller.js"
 import newRole, { getRoles } from "../controller/role.controller.js"
 import SCHOOL from "../controller/school.controller.js"
 import USER from "../controller/user.controller.js"
@@ -37,6 +37,7 @@ const routes = (app) => {
   app.post("/send/mail", SCHOOL.sendEmail)
   app.post("/report", authenticate, upload.single("upload"), createReport)
   app.put("/approve/school/:school_id", approveSponsor)
+  app.post("/periscope", periscope)
 }
 
 export default routes

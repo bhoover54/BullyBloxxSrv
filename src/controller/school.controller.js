@@ -17,7 +17,7 @@ const filterSchool = async (req) => {
           "Like",
           `%` + req.body.school_name.trim() + `%`
         ),
-        zip_code: req.body.zip_code.trim(),
+        zip_code: req.body.zip_code,
         [Op.or]: {
           school_name: Sequelize.where(
             Sequelize.fn("LOWER", Sequelize.col("school_name")),
