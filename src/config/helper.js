@@ -29,15 +29,13 @@ const filter = (req, file, cb) => {
 
 export const emailConfig = async (option) => {
   sendgrid.setApiKey(process.env.SMPT_KEY)
-  option.from = "info@bullyvaxx.com"
+  option.from = "info@bullybloxx.com"
   try {
-    console.log(option)
-    const transport = await sendgrid.send(option)
-
-    console.log("working", transport)
-    return transport
+    await sendgrid.send(option)
+    return "sent"
   } catch (err) {
     console.log(err)
+    return "error"
     // return err.response.body.errors
   }
 }

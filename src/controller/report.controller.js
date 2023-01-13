@@ -3,7 +3,6 @@ import token from "../config/token.js"
 import Report from "../model/report.model.js"
 import Stripe from "stripe"
 import User from "../model/user.model.js"
-import { response } from "express"
 import { Op, Sequelize } from "sequelize"
 
 Report.belongsTo(User, { as: "user", foreignKey: "user_id" })
@@ -44,31 +43,36 @@ export const getReport = async (req, res) => {
   }
 }
 
-export const pay = async () => {
+export const pay = async (req, res) => {
+  console.log("working")
   const stripe = Stripe(process.env.SECRET_KEY)
+  const { token } = req.body
+  console.log(token)
   try {
     const send = await stripe.charges.create(
       {
         amount: 25 * 100,
         currency: "usd",
-        source: req.body.token.id,
-        receipt_email: req.body.token.email,
-        description: "periscode payment"
+        source: token.id,
+        receipt_email: token.email,
+        description: "periscope payment"
       },
       {
         idempotencyKey: `${new Date()}${token}`
       }
     )
     const result = await send
+    console.log(result)
     if (result.status !== "succeeded")
-      return res.status(HTTP.SUCCESS).json({
+      return res.status(HTTP.SERVER_ERROR).json({
         message: "fail"
       })
+
     return res.status(HTTP.SUCCESS).json({
-      message: "succes"
+      message: "success"
     })
   } catch (error) {
-    console.log()
+    console.log(error)
   }
 }
 
@@ -94,7 +98,7 @@ export const periscope = async (req, res) => {
     })
 
     return res.status(HTTP.SUCCESS).json({
-      message: "succes",
+      message: "success",
       data: filter
     })
   } catch (error) {

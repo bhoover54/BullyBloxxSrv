@@ -185,20 +185,21 @@ const updateSchool = async (req, res) => {
 }
 
 const sendEmail = async (req, res) => {
-  const { to, subject, text, html } = req.body
+  let { to, subject, text, html } = req.body
   if (!html) html = ""
-  if (!text) text = ""
   try {
     const send = await emailConfig({
       to: to,
       subject: subject,
-      text: text,
       html: html
     })
 
-    // const result = await emailConfig(send)
+    if (send === "sent")
+      return res.status(HTTP.SUCCESS).json({
+        message: "success"
+      })
     return res.status(HTTP.SUCCESS).json({
-      message: "success"
+      message: "fail"
     })
   } catch (error) {
     console.log(error)
