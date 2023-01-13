@@ -28,23 +28,17 @@ const filter = (req, file, cb) => {
 }
 
 export const emailConfig = async (option) => {
-  sendgrid.setApiKey(process.env.SMTP_PASS)
-  console.log(process.env.SMTP_PASS)
-
-  const message = {
-    to: option?.to,
-    from: "info@bullyvaxx.com",
-    subject: option?.subject,
-    text: option?.text || "",
-    html: option?.html || ""
-  }
+  sendgrid.setApiKey(process.env.SMPT_KEY)
+  option.from = "info@bullyvaxx.com"
   try {
-    const transport = await sendgrid.send(message)
-    console.log("working", res)
+    console.log(option)
+    const transport = await sendgrid.send(option)
+
+    console.log("working", transport)
     return transport
   } catch (err) {
     console.log(err)
-    return "error"
+    // return err.response.body.errors
   }
 }
 

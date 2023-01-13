@@ -85,6 +85,21 @@ const getUsers = async (req, res) => {
     console.log(error)
   }
 }
+const getUser = async (req, res) => {
+  try {
+    console.log(req.body)
+    const user = await User.findByPk(req.params.id, {
+      attributes: { exclude: ["password", "createdAt", "deletedAt", "updatedAt"] }
+    })
 
-const USER = { login, signUp, getUsers }
+    return res.status(HTTP.CREATED).json({
+      message: "success",
+      data: user
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const USER = { login, signUp, getUsers, getUser }
 export default USER

@@ -12,6 +12,7 @@ const { authenticate } = token
 const routes = (app) => {
   app.post("/signup", USER.signUp)
   app.post("/signin", USER.login)
+  app.get("/user/:id", USER.getUser)
 
   app.post("/sponsor/school", authenticate, upload.single("upload"), SCHOOL.addSchool)
   app.post("/donate/school", SCHOOL.donateSchool)
@@ -38,6 +39,7 @@ const routes = (app) => {
   app.post("/report", authenticate, upload.single("upload"), createReport)
   app.put("/approve/school/:school_id", approveSponsor)
   app.post("/periscope", periscope)
+  app.post("/pay/periscope")
 }
 
 export default routes

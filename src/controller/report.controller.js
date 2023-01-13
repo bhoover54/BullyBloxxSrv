@@ -44,7 +44,7 @@ export const getReport = async (req, res) => {
   }
 }
 
-export const periscope = async (req, res) => {
+export const pay = async () => {
   const stripe = Stripe(process.env.SECRET_KEY)
   try {
     const send = await stripe.charges.create(
@@ -61,9 +61,19 @@ export const periscope = async (req, res) => {
     )
     const result = await send
     if (result.status !== "succeeded")
-      return res.status(HTTP.SERVER_ERROR).json({
-        message: "payment not successful"
+      return res.status(HTTP.SUCCESS).json({
+        message: "fail"
       })
+    return res.status(HTTP.SUCCESS).json({
+      message: "succes"
+    })
+  } catch (error) {
+    console.log()
+  }
+}
+
+export const periscope = async (req, res) => {
+  try {
     const filter = await Report.findAll({
       where: {
         school_name: Sequelize.where(
