@@ -78,22 +78,15 @@ export const pay = async (req, res) => {
 
 export const periscope = async (req, res) => {
   try {
+    const { school_name, zip_code, bully_fname, bully_lname, bully_grade, bully_teacher } = req.body
     const filter = await Report.findAll({
       where: {
-        school_name: Sequelize.where(
-          Sequelize.fn("LOWER", Sequelize.col("school_name")),
-          "Like",
-          `%` + req.body.school_name.trim() + `%`
-        ),
-        zip_code: req.body.zip_code.trim(),
-        [Op.or]: {
-          school_name: Sequelize.where(
-            Sequelize.fn("LOWER", Sequelize.col("school_name")),
-            "Like",
-            `%` + req.body.school_name + `%`
-          ),
-          zip_code: req.body.zip_code
-        }
+        school_name: school_name,
+        zip_code: zip_code,
+        bully_fname: bully_fname,
+        bully_lname: bully_lname,
+        bully_grade: bully_grade,
+        bully_teacher: bully_teacher
       }
     })
 
