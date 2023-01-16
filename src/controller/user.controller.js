@@ -10,6 +10,11 @@ User.belongsTo(Role, { as: "role", foreignKey: "role_id" })
 User.hasMany(Report, { as: "reports", sourceKey: "id", foreignKey: "user_id" })
 const signUp = async (req, res) => {
   try {
+    const getEmail = await User.findOne({ where: { email: req.body.email } })
+    if (getEmail)
+      return res.status(HTTP.CONFLICT).json({
+        message: "user already exist"
+      })
     if (!verifyEmail(req.body.email))
       return res.status(HTTP.FORBIDDEN).json({
         message: "invalid email format"
