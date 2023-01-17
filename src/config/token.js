@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken"
 import jwt_decode from "jwt-decode"
 
-const accessToken = (user) => jwt.sign(user, "token")
+const accessToken = (user) => jwt.sign(user, "token", { expiresIn: "2h" })
 
 const authenticate = (req, res, next) => {
   const auth = req.headers["authorization"]

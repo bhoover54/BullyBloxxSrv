@@ -87,6 +87,10 @@ export const periscope = async (req, res) => {
         bully_lname: bully_lname,
         bully_grade: bully_grade,
         bully_teacher: bully_teacher
+      },
+      include: {
+        model: User,
+        as: "user"
       }
     })
 
