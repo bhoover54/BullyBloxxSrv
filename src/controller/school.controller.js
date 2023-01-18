@@ -6,8 +6,10 @@ import Wallet from "../model/wallet.model.js"
 import { Op, Sequelize } from "sequelize"
 import { emailConfig } from "../config/helper.js"
 import Stripe from "stripe"
+import User from "../model/user.model.js"
 
 School.hasOne(Wallet, { as: "wallet", foreignKey: "school_id", sourceKey: "id" })
+School.belongsTo(User, { as: "user", foreignKey: "sponsor_id", targetKey: "id" })
 const filterSchool = async (req) => {
   try {
     const filter = await School.findOne({
@@ -73,11 +75,20 @@ const searchSchool = async (req, res) => {
 const getSchools = async (req, res) => {
   try {
     const schools = await School.findAll({
-      include: {
-        model: Wallet,
-        as: "wallet",
-        attributes: ["balance"]
-      }
+      include: [
+        {
+          model: Wallet,
+          as: "wallet",
+          attributes: ["balance"]
+        },
+        {
+          model: User,
+          as: "user",
+          attributes: {
+            exclude: ["deletedAt", "password", "createdAt", "updatedAt", "role_id"]
+          }
+        }
+      ]
     })
     return res.status(HTTP.SUCCESS).json({
       message: "success",
