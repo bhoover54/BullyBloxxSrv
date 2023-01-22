@@ -71,14 +71,14 @@ const login = async (req, res) => {
 }
 
 const forgotPassword = async (req, res) => {
-  const code = 1234
   try {
+    const code = Math.floor(1000 + Math.random() * 9000)
     const forgotP = await User.update({ forgot_password: code }, { where: { email: req.body.email } })
     if (forgotP) {
       await emailConfig({
         to: req.body.email,
         subject: "Password recovery code",
-        html: `<p> Your password recovery code is ${code}, it will exoire in the next 10min`
+        html: `<p> Your password recovery code is ${code}, it will expire in the next 10min`
       })
     }
     return res.status(HTTP.SUCCESS).json({
