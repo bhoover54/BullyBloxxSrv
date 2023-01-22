@@ -1,4 +1,4 @@
-import verifyEmail from "../config/helper.js"
+import verifyEmail, { emailConfig } from "../config/helper.js"
 import HTTP from "../config/status-code.js"
 import User from "../model/user.model.js"
 import { hash, compare } from "bcrypt"
@@ -70,6 +70,42 @@ const login = async (req, res) => {
   }
 }
 
+const forgotPassword = async (req, res) => {
+  const code = 1234
+  try {
+    const forgotP = await User.update({ forgot_password: code }, { where: { email: req.body.email } })
+    if (forgotP) {
+      await emailConfig({
+        to: req.body.email,
+        subject: "Password recovery code",
+        html: `<p> Your password recovery code is ${code}, it will exoire in the next 10min`
+      })
+    }
+    return res.status(HTTP.SUCCESS).json({
+      message: "recovey code as been sent tp you email"
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const resetPassword = async (req, res) => {
+  try {
+    const newPassword = await hash(req.body.password.toString(), 10)
+    await User.update(
+      { password: newPassword },
+      {
+        where: {
+          forgot_password: code
+        }
+      }
+    )
+    return res.status(HTTP.SUCCESS).json({
+      message: "password reset"
+    })
+  } catch (error) {}
+}
+
 const getUsers = async (req, res) => {
   try {
     console.log(req.body)
@@ -106,5 +142,5 @@ const getUser = async (req, res) => {
   }
 }
 
-const USER = { login, signUp, getUsers, getUser }
+const USER = { login, signUp, getUsers, getUser, forgotPassword, resetPassword }
 export default USER

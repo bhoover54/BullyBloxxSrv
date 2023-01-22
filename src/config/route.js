@@ -1,12 +1,7 @@
 import approveSponsor from "../controller/admin.controller.js"
 import CONTENT from "../controller/content.controller.js"
 import { payment } from "../controller/payment.controller.js"
-import createReport, {
-  getReport,
-  pay,
-  periscope,
-  uploadFile
-} from "../controller/report.controller.js"
+import createReport, { getReport, pay, periscope, uploadFile } from "../controller/report.controller.js"
 import newRole, { getRoles } from "../controller/role.controller.js"
 import SCHOOL from "../controller/school.controller.js"
 import USER from "../controller/user.controller.js"
@@ -18,6 +13,9 @@ const routes = (app) => {
   app.post("/signup", USER.signUp)
   app.post("/signin", USER.login)
   app.get("/user/:id", USER.getUser)
+
+  app.put("/forgot/password", USER.forgotPassword)
+  app.put("/reset/password", USER.resetPassword)
 
   app.post("/sponsor/school", authenticate, upload.single("upload"), SCHOOL.addSchool)
   app.post("/donate/school", SCHOOL.donateSchool)
@@ -42,8 +40,8 @@ const routes = (app) => {
   app.post("/payment", payment)
   app.post("/send/mail", SCHOOL.sendEmail)
   app.post("/report", authenticate, upload.single("upload"), createReport)
-  app.put("/approve/school/:school_id", approveSponsor)
-  app.post("/periscope", periscope)
+  app.put("/approve/school/:school_id", authenticate, approveSponsor)
+  app.post("/periscope", authenticate, periscope)
   app.post("/pay/periscope", pay)
 }
 
