@@ -82,7 +82,8 @@ const forgotPassword = async (req, res) => {
       })
     }
     return res.status(HTTP.SUCCESS).json({
-      message: "recovey code as been sent tp you email"
+      message: "recovey code as been sent tp you email",
+      code: code
     })
   } catch (error) {
     console.log(error)
@@ -93,22 +94,22 @@ const resetPassword = async (req, res) => {
   try {
     const newPassword = await hash(req.body.password.toString(), 10)
     await User.update(
-      { password: newPassword },
+      { password: newPassword, forgot_password: "" },
       {
         where: {
-          forgot_password: code
+          email: req.body.email,
+          forgot_password: req.body.code
         }
       }
     )
     return res.status(HTTP.SUCCESS).json({
-      message: "password reset"
+      message: "password reset success"
     })
   } catch (error) {}
 }
 
 const getUsers = async (req, res) => {
   try {
-    console.log(req.body)
     const user = await User.findAll({
       attributes: { exclude: ["role_id", "password"] },
       include: {

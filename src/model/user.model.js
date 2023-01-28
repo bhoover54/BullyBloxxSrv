@@ -10,6 +10,7 @@ User.init(
     last_name: { type: DataTypes.STRING, allowNull: false },
     email: { type: DataTypes.STRING, allowNull: false },
     phone: DataTypes.STRING,
+    forgot_password: DataTypes.STRING,
     country: { type: DataTypes.STRING, defaultValue: "USA" },
     state: DataTypes.STRING,
     role_id: { type: DataTypes.STRING, defaultValue: "1" },
