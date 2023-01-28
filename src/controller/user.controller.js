@@ -11,10 +11,16 @@ User.hasMany(Report, { as: "reports", sourceKey: "id", foreignKey: "user_id" })
 const signUp = async (req, res) => {
   try {
     const getEmail = await User.findOne({ where: { email: req.body.email } })
+    const userName = await User.findOne({ where: { username: req.body.username } })
     if (getEmail)
       return res.status(HTTP.CONFLICT).json({
         message: "user already exist"
       })
+    if (userName)
+      return res.status(HTTP.CONFLICT).json({
+        message: "username already taken by another user"
+      })
+
     if (!verifyEmail(req.body.email))
       return res.status(HTTP.FORBIDDEN).json({
         message: "invalid email format"

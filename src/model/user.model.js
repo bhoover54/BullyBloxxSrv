@@ -8,6 +8,7 @@ User.init(
     fullName: { type: DataTypes.STRING, allowNull: false },
     first_name: { type: DataTypes.STRING, allowNull: false },
     last_name: { type: DataTypes.STRING, allowNull: false },
+    username: { type: DataTypes.STRING, allowNull: false },
     email: { type: DataTypes.STRING, allowNull: false },
     phone: DataTypes.STRING,
     forgot_password: DataTypes.STRING,
