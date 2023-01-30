@@ -14,11 +14,11 @@ const signUp = async (req, res) => {
     const userName = await User.findOne({ where: { username: req.body.username } })
     if (getEmail)
       return res.status(HTTP.CONFLICT).json({
-        message: "user already exist"
+        message: "Email already exist try another email or sign in"
       })
     if (userName)
       return res.status(HTTP.CONFLICT).json({
-        message: "username already taken by another user"
+        message: "username exists, try another"
       })
 
     if (!verifyEmail(req.body.email))
