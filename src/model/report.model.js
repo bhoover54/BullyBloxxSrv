@@ -52,6 +52,9 @@ Report.init(
     w_sknow: DataTypes.STRING,
     w_details: DataTypes.STRING,
     bully_witnessed: DataTypes.STRING,
+    bully_witness: DataTypes.STRING,
+    bully_witnesses: DataTypes.STRING,
+    w_keep: DataTypes.STRING,
     deletedAt: DataTypes.DATE
   },
   { sequelize, tableName: "reports", paranoid: true }
