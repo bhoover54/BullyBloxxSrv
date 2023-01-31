@@ -88,7 +88,7 @@ const forgotPassword = async (req, res) => {
       })
     }
     return res.status(HTTP.SUCCESS).json({
-      message: "recovey code as been sent tp you email",
+      message: "A recovery code has been sent to your emailS",
       code: code
     })
   } catch (error) {
