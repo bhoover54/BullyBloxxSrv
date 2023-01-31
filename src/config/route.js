@@ -41,7 +41,7 @@ const routes = (app) => {
   app.post("/send/mail", SCHOOL.sendEmail)
   app.post("/report", authenticate, upload.single("upload"), createReport)
   app.put("/approve/school/:school_id", authenticate, approveSponsor)
-  app.post("/periscope", authenticate, periscope)
+  app.post("/periscope", periscope)
   app.post("/pay/periscope", pay)
 }
 
