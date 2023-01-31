@@ -6,6 +6,8 @@ Report.init(
   {
     id: { type: DataTypes.INTEGER, allowNull: false, primaryKey: true, autoIncrement: true },
     user_id: { type: DataTypes.STRING, allowNull: false },
+    first_name: DataTypes.STRING,
+    last_name: DataTypes.STRING,
     phone: DataTypes.STRING,
     report_type: DataTypes.STRING,
     email: DataTypes.STRING,

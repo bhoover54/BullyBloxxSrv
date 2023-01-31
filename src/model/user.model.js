@@ -5,9 +5,9 @@ class User extends Model {}
 User.init(
   {
     id: { type: DataTypes.INTEGER, allowNull: false, primaryKey: true, autoIncrement: true },
-    fullName: { type: DataTypes.STRING, allowNull: false },
-    first_name: { type: DataTypes.STRING, allowNull: false },
-    last_name: { type: DataTypes.STRING, allowNull: false },
+    fullName: { type: DataTypes.STRING, },
+    first_name: { type: DataTypes.STRING,  },
+    last_name: { type: DataTypes.STRING,  },
     username: { type: DataTypes.STRING, allowNull: false },
     email: { type: DataTypes.STRING, allowNull: false },
     phone: DataTypes.STRING,
