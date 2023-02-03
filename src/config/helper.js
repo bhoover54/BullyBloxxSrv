@@ -22,7 +22,7 @@ const multerStorage = multer.diskStorage({
 
 const filter = (req, file, cb) => {
   const mimetype = file.mimetype.split("/")[1].toLowerCase()
-  const acceptedMimeTypes = ["jpg", "jpeg", "png", "mp4"]
+  const acceptedMimeTypes = ["jpg", "jpeg", "png", "mp4", "mov", "avi", "wmv", "mkv"]
   if (acceptedMimeTypes.includes(mimetype)) cb(null, true)
   else cb(new Error("Unsurpported file format"), false)
 }

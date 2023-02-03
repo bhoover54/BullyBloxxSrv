@@ -9,7 +9,7 @@ const app = express()
 dotenv.config()
 app.use(express.static("public/uploads"))
 app.use(cors({ origin: "*" }))
-app.use(json({ limit: "100mb" }))
+app.use(json())
 
 const PORT = process.env.PORT || 5000
 sequelize.sync()
