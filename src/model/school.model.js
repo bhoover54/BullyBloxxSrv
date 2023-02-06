@@ -8,6 +8,7 @@ School.init(
     sponsor_id: { type: DataTypes.STRING, allowNull: false },
     school_name: { type: DataTypes.STRING, allowNull: false },
     zip_code: { type: DataTypes.STRING, allowNull: false },
+    realtor_name: { type: DataTypes.STRING, allowNull: false },
     business_name: { type: DataTypes.STRING, allowNull: false },
     business_email: { type: DataTypes.STRING, allowNull: false },
     business_mobile: { type: DataTypes.STRING, allowNull: false },
