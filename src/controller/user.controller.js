@@ -66,7 +66,7 @@ const login = async (req, res) => {
       name: user.fullName,
       role: user.role.name
     })
-    return res.status(HTTP.CREATED).json({
+    return res.status(HTTP.SUCCESS).json({
       message: "success",
       token: userToken,
       role: user.role.name
