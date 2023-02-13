@@ -56,6 +56,67 @@ Report.init(
     bully_witnesses: DataTypes.STRING,
     w_keep: DataTypes.STRING,
     w_student_aware: DataTypes.STRING,
+
+    blyg_first_name1: DataTypes.STRING,
+    blyg_first_name2: DataTypes.STRING,
+    blyg_first_name3: DataTypes.STRING,
+
+    blyg_last_name1: DataTypes.STRING,
+    blyg_last_name2: DataTypes.STRING,
+    blyg_last_name3: DataTypes.STRING,
+
+    blyg_gender1: DataTypes.STRING,
+    blyg_gender2: DataTypes.STRING,
+    blyg_gender3: DataTypes.STRING,
+
+    blyg_grade1: DataTypes.STRING,
+    blyg_grade2: DataTypes.STRING,
+    blyg_grade3: DataTypes.STRING,
+
+    blyg_teacher1: DataTypes.STRING,
+    blyg_teacher2: DataTypes.STRING,
+    blyg_teacher3: DataTypes.STRING,
+
+    blyv_first_name1: DataTypes.STRING,
+    blyv_first_name2: DataTypes.STRING,
+    blyv_first_name3: DataTypes.STRING,
+
+    blyv_last_name1: DataTypes.STRING,
+    blyv_last_name2: DataTypes.STRING,
+    blyv_last_name3: DataTypes.STRING,
+
+    blyv_gender1: DataTypes.STRING,
+    blyv_gender2: DataTypes.STRING,
+    blyv_gender3: DataTypes.STRING,
+
+    blyv_grade1: DataTypes.STRING,
+    blyv_grade2: DataTypes.STRING,
+    blyv_grade3: DataTypes.STRING,
+
+    blyv_teacher1: DataTypes.STRING,
+    blyv_teacher2: DataTypes.STRING,
+    blyv_teacher3: DataTypes.STRING,
+
+    blyw_first_name1: DataTypes.STRING,
+    blyw_first_name2: DataTypes.STRING,
+    blyw_first_name3: DataTypes.STRING,
+
+    blyw_last_name1: DataTypes.STRING,
+    blyw_last_name2: DataTypes.STRING,
+    blyw_last_name3: DataTypes.STRING,
+
+    blyw_gender1: DataTypes.STRING,
+    blyw_gender2: DataTypes.STRING,
+    blyw_gender3: DataTypes.STRING,
+
+    blyw_grade1: DataTypes.STRING,
+    blyw_grade2: DataTypes.STRING,
+    blyw_grade3: DataTypes.STRING,
+
+    blyw_teacher1: DataTypes.STRING,
+    blyw_teacher2: DataTypes.STRING,
+    blyw_teacher3: DataTypes.STRING,
+    details_total: DataTypes.STRING,
     deletedAt: DataTypes.DATE
   },
   { sequelize, tableName: "reports", paranoid: true }
