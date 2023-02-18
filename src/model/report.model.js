@@ -117,6 +117,7 @@ Report.init(
     blyw_teacher2: DataTypes.STRING,
     blyw_teacher3: DataTypes.STRING,
     details_total: DataTypes.STRING,
+    trustee: DataTypes.TEXT,
     deletedAt: DataTypes.DATE
   },
   { sequelize, tableName: "reports", paranoid: true }
