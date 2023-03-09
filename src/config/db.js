@@ -1,12 +1,13 @@
 import Sequelize from "sequelize"
 
 const option = {
-  host: "afrilens.com.ng",
+  host: "208.109.224.243",
+  // host: "afrilens.com.ng",
   dialect: "mysql"
   // port: 3360
 }
 
-const sequelize = new Sequelize("afrilens_bullybloxx", "afrilens_victor", "Bullyvax2022", option)
+const sequelize = new Sequelize("bullybloxx", "bullybloxx", "bullybloxx2023", option)
 
 try {
   await sequelize.authenticate()
@@ -16,3 +17,9 @@ try {
 }
 
 export default sequelize
+
+// DB name: bullybloxx
+// username: bullybloxx
+// password: Bullyvax2023
+
+// url:bullybloxx.com
