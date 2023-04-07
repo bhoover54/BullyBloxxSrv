@@ -1,9 +1,9 @@
+import compression from "compression"
 import express, { json } from "express"
 import dotenv from "dotenv"
 import cors from "cors"
 import routes from "./config/route.js"
 import sequelize from "./config/db.js"
-import compression from "compression"
 import path from "path"
 
 dotenv.config()
