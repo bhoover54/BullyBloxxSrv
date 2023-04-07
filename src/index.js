@@ -3,10 +3,13 @@ import dotenv from "dotenv"
 import cors from "cors"
 import routes from "./config/route.js"
 import sequelize from "./config/db.js"
+import compression from "compression"
 import path from "path"
 
-const app = express()
 dotenv.config()
+const app = express()
+app.use(compression())
+
 app.use(express.static("public/uploads"))
 app.use(cors({ origin: "*" }))
 app.use(json())
