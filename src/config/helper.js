@@ -31,7 +31,7 @@ const filter = (req, file, cb) => {
 
 export const emailConfig = async (option) => {
   sendgrid.setApiKey(process.env.SMPT_KEY)
-  option.from = "info@bullybloxx.com"
+  option.from = "info@thebullyperiscope.com"
   try {
     await sendgrid.send(option)
     return "sent"
